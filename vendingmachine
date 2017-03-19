@@ -1,0 +1,105 @@
+
+package vendingmachine;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Begüm Özdemir 12070001010
+ */
+public class VendingMachine {
+
+    public static void main(String[] args) {
+    
+    Scanner secimScanner = new Scanner(System.in);
+    int Secim = 0 ;
+    
+    System.out.println("\n\nAlmak istediginiz urunun numarasini girin:"
+                + "\n1: Pınar Su          \t 50" + "\n2: Evian Su          \t 75" + "\n3: Snickers          \t 100"
+                + "\n4: Tadelle           \t 125"+ "\n5: Cola Zero         \t 150"+ "\n6: Oreo              \t 175"
+                + "\n7: Nestle Cikolata   \t 200"+ "\n8: Exit ");
+    
+    System.out.println("\nSeciminizi girin: ");
+    Secim = secimScanner.nextInt();
+     
+    int Fiyat = UcretiHesapla(Secim);
+    int Paraustu = UcretParaustuHesapla(Fiyat);
+    ParaustuHesapla(Paraustu);
+
+}
+
+public static int UcretiHesapla(int menuSecim){
+    
+    // Menude secim numarasina gore yazan fiyatları return et mainde UcretParaustuHesapla fonksiyonuna passla
+    if (menuSecim == 1)
+        return 50;
+    if (menuSecim == 2)
+        return 75;
+    if (menuSecim == 3)
+        return 100;
+    if (menuSecim == 4)
+        return 125;
+    if (menuSecim == 5)
+        return 150;
+    if (menuSecim == 6)
+        return 175;
+    if (menuSecim == 7)
+        return 200;
+    else{
+        System.out.println("Hatali secim yaptiniz!");
+    } 
+        return 0;
+}
+
+public static int UcretParaustuHesapla(int Fiyat){
+    
+    Scanner odemeScanner = new Scanner(System.in);
+    int Para = 0;
+    int ParaSayi = 0;
+     
+    System.out.println("Alacaginiz urunun fiyati " + Fiyat + " kurus \nOdeyeceginiz 1 lira miktarını girin (adet):");
+    ParaSayi = odemeScanner.nextInt();
+    Para = ParaSayi * 100;
+    
+    // Eger girilen miktar fiyattan az ise hata ver.
+    while (Para < Fiyat){
+        System.out.println("Yeterli miktarda para girmediniz, tekrar girin");
+        Para = Para + odemeScanner.nextInt();
+    }
+    
+    if ( Para > 200){
+        System.out.println("Makine en fazla 2 lira kabul edebilir!");
+    }
+    // Odenen miktardan fiyatı cikar ve mainde ParaustuHesapla fonksiyonuna passla
+    return Para - Fiyat ;
+}
+
+public static void ParaustuHesapla(int paraUstu){
+    
+    int ceyrekurus = 0;
+    int ellikurus = 0;
+    int birlira = 0;
+    
+    // Eger para ustu 1 liradan buyuk ise
+    while (paraUstu >= 100){
+        birlira = 1 + birlira;
+        paraUstu = paraUstu - 100;
+    }
+    // Eger para ustu 50 kurustan buyuk ise
+    while (paraUstu >= 50){
+        ellikurus = 1 + ellikurus;
+        paraUstu = paraUstu - 50;
+    }
+    
+    // Eger para ustu 25 kurustan buyuk ise
+    while (paraUstu >= 25){
+        ceyrekurus = ceyrekurus + 1;
+        paraUstu = paraUstu - 25;
+    }
+    
+    // Eger para ustu 10 kurustan buyuk ise
+    // Para üstünü ekrana bastır
+    System.out.printf("\nPara ustunuz:\n%d adet 1 lira,%d adet 50 Kurus,%d adet 25 Kurus",
+        birlira,ellikurus,ceyrekurus,paraUstu);
+}
+}
